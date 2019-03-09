@@ -6,14 +6,30 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { retrieveJWT } from './common/auth';
 import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import {
+	MatButtonModule,
+	MatDialogModule,
+	MatFormFieldModule,
+	MatIconModule,
+	MatInputModule,
+	MatSnackBarModule,
+	MatToolbarModule
+} from '@angular/material';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		NavbarComponent,
+		LoginDialogComponent
 	],
 	imports: [
 		BrowserModule,
 		HttpClientModule,
+		ReactiveFormsModule,
 		JwtModule.forRoot({
 			config: {
 				tokenGetter: retrieveJWT,
@@ -21,7 +37,18 @@ import { environment } from '../environments/environment';
 				blacklistedRoutes: [/\/auth\/[a-z]+$/]
 			}
 		}),
-		AppRoutingModule
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		MatButtonModule,
+		MatIconModule,
+		MatToolbarModule,
+		MatDialogModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatSnackBarModule
+	],
+	entryComponents: [
+		LoginDialogComponent
 	],
 	providers: [],
 	bootstrap: [AppComponent]

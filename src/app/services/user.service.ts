@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { catchError, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { handleError, options } from '../common/http';
+import { Possibly } from '../common/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -12,7 +13,7 @@ import { handleError, options } from '../common/http';
 export class UserService {
 
 	// User if logged in, null if logged out, undefined if pending.
-	$ = new BehaviorSubject<User | null | undefined>(undefined);
+	$ = new BehaviorSubject<Possibly<User>>(undefined);
 
 	constructor(private http: HttpClient, private authService: AuthService) {
 		this.authService.$.pipe(

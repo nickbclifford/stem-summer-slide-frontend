@@ -6,6 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, map } from 'rxjs/operators';
 import { JWT_STORAGE_KEY, retrieveJWT } from '../common/auth';
 import { BehaviorSubject } from 'rxjs';
+import { Possibly } from '../common/types';
 
 @Injectable({
 	providedIn: 'root'
@@ -13,7 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
 
 	// AuthState if logged in, null if logged out, undefined if pending.
-	$ = new BehaviorSubject<AuthState | null | undefined>(undefined);
+	$ = new BehaviorSubject<Possibly<AuthState>>(undefined);
 
 	constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
 		this.updateAuthState();
@@ -32,6 +33,11 @@ export class AuthService {
 			}),
 			catchError(handleError)
 		);
+	}
+
+	logout() {
+		localStorage.removeItem(JWT_STORAGE_KEY);
+		this.updateAuthState();
 	}
 
 	register(name: string, email: string, password: string) {
