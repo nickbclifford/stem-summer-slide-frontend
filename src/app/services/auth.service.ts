@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { DataResponse, handleError, options } from '../common/http';
+import { options } from '../common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { JWT_STORAGE_KEY, retrieveJWT } from '../common/auth';
 import { BehaviorSubject } from 'rxjs';
 import { Possibly } from '../common/types';
@@ -21,17 +21,16 @@ export class AuthService {
 	}
 
 	login(email: string, password: string) {
-		return this.http.post<DataResponse<LoginResponse>>(
+		return this.http.post<LoginResponse>(
 			environment.backendURL + '/auth/login',
 			{ email, password },
 			options
 		).pipe(
-			map(({ data: { token } }) => {
+			map(({ token }) => {
 				localStorage.setItem(JWT_STORAGE_KEY, token);
 				this.updateAuthState();
 				return token;
-			}),
-			catchError(handleError)
+			})
 		);
 	}
 
@@ -45,7 +44,7 @@ export class AuthService {
 			environment.backendURL + '/auth/register',
 			{ name, email, password },
 			options
-		).pipe(catchError(handleError));
+		);
 	}
 
 	confirm(user: number, hash: string) {
@@ -53,7 +52,7 @@ export class AuthService {
 			environment.backendURL + '/auth/confirm',
 			{ user, hash },
 			options
-		).pipe(catchError(handleError));
+		);
 	}
 
 	private updateAuthState() {

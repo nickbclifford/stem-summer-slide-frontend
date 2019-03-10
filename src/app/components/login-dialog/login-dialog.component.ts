@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
@@ -20,8 +20,7 @@ export class LoginDialogComponent {
 
 	constructor(
 		private authService: AuthService,
-		private dialogRef: MatDialogRef<LoginDialogComponent>,
-		private snackBar: MatSnackBar
+		private dialogRef: MatDialogRef<LoginDialogComponent>
 	) { }
 
 	get emailErrorMessage() {
@@ -39,8 +38,7 @@ export class LoginDialogComponent {
 	onLogin() {
 		this.authService.login(this.email.value, this.password.value).subscribe(
 			() => this.dialogRef.close(),
-			err => {
-				this.snackBar.open(`Error: ${err}`, 'Dismiss');
+			() => {
 				this.email.reset();
 				this.password.reset();
 			}

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService, AuthState } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { Possibly } from '../../common/types';
+import { UserService } from '../../services/user.service';
 
 @Component({
 	selector: 'app-navbar',
@@ -11,14 +11,7 @@ import { Possibly } from '../../common/types';
 })
 export class NavbarComponent {
 
-	authState: Possibly<AuthState>;
-
-	constructor(private authService: AuthService, private dialog: MatDialog) {
-		this.authService.$.subscribe(
-			state => this.authState = state,
-			err => console.error(err)
-		);
-	}
+	constructor(private authService: AuthService, private dialog: MatDialog, private userService: UserService) { }
 
 	login() {
 		this.dialog.open(LoginDialogComponent);

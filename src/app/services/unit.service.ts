@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Question } from './question.service';
-import { catchError } from 'rxjs/operators';
-import { handleError, options } from '../common/http';
+import { options } from '../common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -12,11 +11,18 @@ export class UnitService {
 
 	constructor(private http: HttpClient) { }
 
+	getAllUnits() {
+		return this.http.get<Unit[]>(
+			environment.backendURL + '/unit',
+			options
+		);
+	}
+
 	getUnit(id: number) {
 		return this.http.get<Unit>(
 			environment.backendURL + '/unit/' + id,
 			options
-		).pipe(catchError(handleError));
+		);
 	}
 
 	saveUnit(id: number, title: string, description: string, questionIds: number[]) {
@@ -24,7 +30,7 @@ export class UnitService {
 			environment.backendURL + '/unit/' + id,
 			{ title, description, questionIds },
 			options
-		).pipe(catchError(handleError));
+		);
 	}
 
 }

@@ -1,9 +1,9 @@
 <mat-toolbar color="primary">
 	<span>STEM Summer Slide</span>
 	<span class="spacer"></span>
-	<ng-container *ngIf="authState; else notLoggedIn">
+	<ng-container *ngIf="(userService.$ | async) as user; else notLoggedIn">
 		<!-- TODO: routerLink to profile page -->
-		<span>Hello, user {{ authState.user }}</span>
+		<span>Hello, {{ user.name }}</span>
 		<button mat-raised-button color="primary" (click)="logout()">Logout</button>
 	</ng-container>
 	<ng-template #notLoggedIn>
