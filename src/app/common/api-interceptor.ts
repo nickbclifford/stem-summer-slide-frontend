@@ -25,7 +25,6 @@ export class APIInterceptor implements HttpInterceptor {
 					// ErrorResponse case is already handled by the handler operator
 					const apiEvent: HttpResponse<DataResponse<any>> = event;
 					event = apiEvent.clone({
-						// tslint:disable-next-line:no-non-null-assertion
 						body: apiEvent.body!.data
 					});
 				}

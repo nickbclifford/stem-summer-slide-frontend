@@ -12,6 +12,7 @@ import {
 	MatButtonModule,
 	MatDialogModule,
 	MatFormFieldModule,
+	MatGridListModule,
 	MatIconModule,
 	MatInputModule,
 	MatListModule,
@@ -22,13 +23,15 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { APIInterceptor } from './common/api-interceptor';
 import { HomeComponent } from './components/home/home.component';
+import { UnitComponent } from './components/unit/unit.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		NavbarComponent,
 		LoginDialogComponent,
-		HomeComponent
+		HomeComponent,
+		UnitComponent
 	],
 	imports: [
 		BrowserModule,
@@ -49,10 +52,12 @@ import { HomeComponent } from './components/home/home.component';
 		MatFormFieldModule,
 		MatInputModule,
 		MatSnackBarModule,
-		MatListModule
+		MatListModule,
+		MatGridListModule
 	],
 	entryComponents: [
-		LoginDialogComponent
+		LoginDialogComponent,
+		UnitComponent
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true }

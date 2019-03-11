@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Unit {{ unit.id }}: {{ unit.title }}</h1>
+<div mat-dialog-content>
+	<p>{{ unit.description }}</p>
+	<mat-grid-list cols="2">
+		<!-- TODO: routerLinks to question pages -->
+		<mat-grid-tile *ngFor="let type of types">{{ type | titlecase }}</mat-grid-tile>
+	</mat-grid-list>
+</div>

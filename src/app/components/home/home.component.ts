@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Unit, UnitService } from '../../services/unit.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { UnitComponent } from '../unit/unit.component';
 
 @Component({
 	selector: 'app-home',
@@ -9,20 +14,42 @@ import { Unit, UnitService } from '../../services/unit.service';
 export class HomeComponent implements OnInit {
 
 	units: Unit[] = [];
+	currentUnit: Unit | null = null;
 
-	constructor(private unitService: UnitService) { }
+	constructor(
+		private unitService: UnitService,
+		private route: ActivatedRoute,
+		private router: Router,
+		private dialog: MatDialog
+	) { }
 
 	ngOnInit() {
-		// async pipe is being weird for some reason so we're doing it here instead
-		this.unitService.getAllUnits().subscribe(units => {
-			console.log(units);
-			this.units = units;
+		this.unitService.getAllUnits().subscribe(units => this.units = units);
+
+		this.route.paramMap.pipe(
+			switchMap(params => {
+				const id = params.get('id');
+				if (id === null) {
+					return of(null);
+				} else {
+					return this.unitService.getUnit(parseInt(id, 10));
+				}
+			})
+		).subscribe(unit => {
+			this.currentUnit = unit;
+			if (unit !== null) {
+				this.handleUnit(unit);
+			}
 		});
 	}
 
 	handleUnit(unit: Unit) {
-		// TODO
-		console.log(unit);
+		if (this.currentUnit === null) {
+			this.router.navigate(['/unit', unit.id]);
+		} else {
+			const dialogRef = this.dialog.open(UnitComponent, { data: unit });
+			dialogRef.afterClosed().subscribe(() => this.router.navigate(['/home']));
+		}
 	}
 
 }
