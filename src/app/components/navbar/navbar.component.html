@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-	<span>STEM Summer Slide</span>
+	<a routerLink="/home">STEM Summer Slide</a>
 	<span class="spacer"></span>
 	<ng-container *ngIf="(userService.$ | async) as user; else notLoggedIn">
 		<!-- TODO: routerLink to profile page -->

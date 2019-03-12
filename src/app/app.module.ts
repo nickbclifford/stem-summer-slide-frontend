@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { APIInterceptor } from './common/api-interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { UnitComponent } from './components/unit/unit.component';
+import { QuestionComponent } from './components/question/question.component';
 
 @NgModule({
 	declarations: [
@@ -31,7 +32,8 @@ import { UnitComponent } from './components/unit/unit.component';
 		NavbarComponent,
 		LoginDialogComponent,
 		HomeComponent,
-		UnitComponent
+		UnitComponent,
+		QuestionComponent
 	],
 	imports: [
 		BrowserModule,

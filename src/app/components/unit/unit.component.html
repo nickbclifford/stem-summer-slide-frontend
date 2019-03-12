@@ -1,8 +1,12 @@
 <h1 mat-dialog-title>Unit {{ unit.id }}: {{ unit.title }}</h1>
 <div mat-dialog-content>
 	<p>{{ unit.description }}</p>
-	<mat-grid-list cols="2">
+	<mat-grid-list cols="2" gutterSize="0.5em">
 		<!-- TODO: routerLinks to question pages -->
-		<mat-grid-tile *ngFor="let type of types">{{ type | titlecase }}</mat-grid-tile>
+		<a matRipple *ngFor="let type of types" [routerLink]="'/question/' + getFullQuestion(type).id">
+			<mat-grid-tile class="mat-elevation-z4">
+				<span>{{ type | titlecase }}</span>
+			</mat-grid-tile>
+		</a>
 	</mat-grid-list>
 </div>
