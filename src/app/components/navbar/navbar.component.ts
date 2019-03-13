@@ -11,7 +11,9 @@ import { UserService } from '../../services/user.service';
 })
 export class NavbarComponent {
 
-	constructor(private authService: AuthService, private dialog: MatDialog, private userService: UserService) { }
+	// Apparently fields have to be public if you're using them in the template
+	// Otherwise the Angular language service throws a fit
+	constructor(private authService: AuthService, private dialog: MatDialog, public userService: UserService) { }
 
 	login() {
 		this.dialog.open(LoginDialogComponent);

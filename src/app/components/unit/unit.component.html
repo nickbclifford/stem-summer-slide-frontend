@@ -2,11 +2,18 @@
 <div mat-dialog-content>
 	<p>{{ unit.description }}</p>
 	<mat-grid-list cols="2" gutterSize="0.5em">
-		<!-- TODO: routerLinks to question pages -->
-		<a matRipple *ngFor="let type of types" [routerLink]="'/question/' + getFullQuestion(type).id">
-			<mat-grid-tile class="mat-elevation-z4">
-				<span>{{ type | titlecase }}</span>
-			</mat-grid-tile>
-		</a>
+		<ng-container *ngFor="let type of types">
+			<!-- Don't provide a routerLink unless the question actually exists -->
+			<!-- Will that actually ever happen? I don't know, but we should probably handle it -->
+			<a matRipple
+			   *appLet="getFullQuestion(type) as question"
+			   [routerLink]="question && '/question/' + question.id"
+			   [matRippleDisabled]="!question"
+			>
+				<mat-grid-tile class="mat-elevation-z4">
+					<span>{{ type | titlecase }}</span>
+				</mat-grid-tile>
+			</a>
+		</ng-container>
 	</mat-grid-list>
 </div>

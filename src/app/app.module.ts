@@ -25,6 +25,7 @@ import { APIInterceptor } from './common/api-interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { UnitComponent } from './components/unit/unit.component';
 import { QuestionComponent } from './components/question/question.component';
+import { LetDirective } from './common/let.directive';
 
 @NgModule({
 	declarations: [
@@ -33,7 +34,8 @@ import { QuestionComponent } from './components/question/question.component';
 		LoginDialogComponent,
 		HomeComponent,
 		UnitComponent,
-		QuestionComponent
+		QuestionComponent,
+		LetDirective
 	],
 	imports: [
 		BrowserModule,

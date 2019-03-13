@@ -32,6 +32,4 @@ export class UnitComponent implements OnInit {
 		return this.unit.questions.find(q => q.questionType === type);
 	}
 
-
-
 }
