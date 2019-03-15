@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>Unit {{ unit.id }}: {{ unit.title }}</h1>
 <div mat-dialog-content>
 	<p>{{ unit.description }}</p>
+	<!-- TODO: why isn't it showing up? -->
 	<mat-grid-list cols="2" gutterSize="0.5em">
 		<ng-container *ngFor="let type of types">
 			<!-- Don't provide a routerLink unless the question actually exists -->
@@ -11,7 +12,8 @@
 			   [matRippleDisabled]="!question"
 			>
 				<mat-grid-tile class="mat-elevation-z4">
-					<span>{{ type | titlecase }}</span>
+					<mat-icon fontSet="fa" [fontIcon]="getIconClass(type)"></mat-icon>
+					<mat-grid-tile-footer>{{ type | titlecase }}</mat-grid-tile-footer>
 				</mat-grid-tile>
 			</a>
 		</ng-container>

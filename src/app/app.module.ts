@@ -15,7 +15,7 @@ import {
 	MatGridListModule,
 	MatIconModule,
 	MatInputModule,
-	MatListModule,
+	MatListModule, MatRippleModule,
 	MatSnackBarModule,
 	MatToolbarModule
 } from '@angular/material';
@@ -57,7 +57,8 @@ import { LetDirective } from './common/let.directive';
 		MatInputModule,
 		MatSnackBarModule,
 		MatListModule,
-		MatGridListModule
+		MatGridListModule,
+		MatRippleModule
 	],
 	entryComponents: [
 		LoginDialogComponent,

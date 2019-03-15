@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Unit, UnitService } from '../../services/unit.service';
+import { Unit } from '../../services/unit.service';
 import { QuestionType } from '../../services/question.service';
 import { NavigationStart, Router } from '@angular/router';
 
@@ -14,7 +14,6 @@ export class UnitComponent implements OnInit {
 	types: QuestionType[] = Object.values(QuestionType);
 
 	constructor(
-		private unitService: UnitService,
 		private dialogRef: MatDialogRef<UnitComponent>,
 		@Inject(MAT_DIALOG_DATA) private unit: Unit,
 		private router: Router
@@ -32,4 +31,15 @@ export class UnitComponent implements OnInit {
 		return this.unit.questions.find(q => q.questionType === type);
 	}
 
+	getIconClass(type: QuestionType) {
+		return QUESTION_TYPE_ICONS[type];
+	}
+
 }
+
+export const QUESTION_TYPE_ICONS: Record<QuestionType, string> = {
+	[QuestionType.SCIENCE]: 'fa-flask',
+	[QuestionType.TECHNOLOGY]: 'fa-desktop',
+	[QuestionType.ENGINEERING]: 'fa-cogs',
+	[QuestionType.MATHEMATICS]: 'fa-calculator'
+};
