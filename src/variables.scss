@@ -1,0 +1,8 @@
+@import "~@angular/material/theming";
+
+$stem-palette-map: (
+	science: $mat-green,
+	technology: $mat-blue,
+	engineering: $mat-deep-purple,
+	mathematics: $mat-cyan
+);

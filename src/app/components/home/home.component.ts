@@ -47,7 +47,10 @@ export class HomeComponent implements OnInit {
 		if (this.currentUnit === null) {
 			this.router.navigate(['/home', unit.id]);
 		} else {
-			const dialogRef = this.dialog.open(UnitComponent, { data: unit });
+			const dialogRef = this.dialog.open(UnitComponent, {
+				data: unit,
+				width: '20em'
+			});
 			dialogRef.afterClosed().subscribe((navigatedAway: boolean) => {
 				if (!navigatedAway) {
 					this.router.navigate(['/home']);

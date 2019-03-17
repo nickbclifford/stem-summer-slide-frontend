@@ -1,11 +1,32 @@
+@import "~src/variables.scss";
+
+[mat-dialog-title] {
+	margin-bottom: 0;
+}
+
 .mat-ripple {
 	position: static;
 }
+
 mat-grid-list {
 	margin: 1em 0;
 }
-mat-grid-tile {
+
+.flex-content {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-flow: column wrap;
+}
+
+@each $type, $palette in $stem-palette-map {
+	.tile-#{$type} {
+		background: mat-color($palette, 200);
+	}
+}
+
+mat-icon {
+	height: auto;
+	width: auto;
+	margin-bottom: 0.2em;
 }
