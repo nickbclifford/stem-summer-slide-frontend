@@ -26,6 +26,7 @@ import { HomeComponent } from './components/home/home.component';
 import { UnitComponent } from './components/unit/unit.component';
 import { QuestionComponent } from './components/question/question.component';
 import { LetDirective } from './common/let.directive';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
 	declarations: [
@@ -58,7 +59,8 @@ import { LetDirective } from './common/let.directive';
 		MatSnackBarModule,
 		MatListModule,
 		MatGridListModule,
-		MatRippleModule
+		MatRippleModule,
+		MaterialFileInputModule
 	],
 	entryComponents: [
 		LoginDialogComponent,

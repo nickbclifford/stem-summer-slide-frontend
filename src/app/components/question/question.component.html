@@ -1,5 +1,42 @@
-<h1>Unit {{ question.unitId }}: {{ question.questionType | titlecase }}</h1>
+<h1>Unit {{ question.unitId }} - {{ question.questionType | titlecase }}</h1>
 <h2>{{ question.answerFormat | titlecase }} submission, max {{ question.maxPoints }} points</h2>
 <p>
 	{{ question.body }}
 </p>
+<form [formGroup]="submissionForm" (ngSubmit)="onSubmit()">
+	<mat-form-field [ngSwitch]="question.answerFormat">
+		<textarea
+			*ngSwitchCase="formats.TEXT"
+			[formControlName]="formats.TEXT"
+			matInput
+			placeholder="Type your answer here..."
+		></textarea>
+
+		<input
+			*ngSwitchCase="formats.NUMERICAL"
+			[formControlName]="formats.NUMERICAL"
+			matInput
+			type="number"
+			placeholder="Type your answer here..."
+		>
+
+		<!-- matSuffixes have to be a direct descendant of a mat-form-field, so it won't let me put it in an ng-container -->
+		<ngx-mat-file-input
+			#fileInput
+			[style.display]="question.answerFormat != formats.IMAGE ? 'none' : ''"
+			[formControlName]="formats.IMAGE"
+			placeholder="Upload an image..."
+			accept=".png, .jpg, .jpeg"
+		></ngx-mat-file-input>
+		<mat-icon
+			*ngIf="question.answerFormat == formats.IMAGE"
+			(click)="!fileInput.empty && fileInput.clear($event)"
+			matSuffix
+		>
+			{{ fileInput.empty ? 'add_a_photo' : 'clear' }}
+		</mat-icon>
+
+		<mat-error *ngIf="submissionForm.invalid">Invalid submission!</mat-error>
+	</mat-form-field>
+	<button [disabled]="submissionForm.invalid" mat-raised-button type="submit" color="primary">Submit</button>
+</form>
