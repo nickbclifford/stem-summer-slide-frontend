@@ -15,9 +15,12 @@ import {
 	MatGridListModule,
 	MatIconModule,
 	MatInputModule,
-	MatListModule, MatRippleModule,
+	MatListModule,
+	MatProgressSpinnerModule,
+	MatRippleModule,
 	MatSnackBarModule,
-	MatToolbarModule
+	MatToolbarModule,
+	MatTooltipModule
 } from '@angular/material';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -60,7 +63,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 		MatListModule,
 		MatGridListModule,
 		MatRippleModule,
-		MaterialFileInputModule
+		MaterialFileInputModule,
+		MatTooltipModule,
+		MatProgressSpinnerModule
 	],
 	entryComponents: [
 		LoginDialogComponent,

@@ -25,6 +25,10 @@ mat-grid-list {
 	}
 }
 
+.tile-disabled {
+	background: mat-color($mat-gray, 200);
+}
+
 mat-icon {
 	height: auto;
 	width: auto;

@@ -6,6 +6,9 @@ import { FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { FileInput } from 'ngx-material-file-input';
 import { ErrorStateMatcher } from '@angular/material';
 import { CrossFieldErrorMatcher } from '../../common/cross-field-error-matcher';
+import { AnswerService } from '../../services/answer.service';
+
+type SubmissionState = 'unsubmitted' | 'loading' | 'submitted';
 
 @Component({
 	selector: 'app-question',
@@ -19,6 +22,7 @@ export class QuestionComponent implements OnInit {
 
 	question!: Question;
 	formats = AnswerFormat;
+	submissionState: SubmissionState = 'unsubmitted';
 
 	submissionForm = new FormGroup({
 		[AnswerFormat.TEXT]: new FormControl(''),
@@ -26,7 +30,11 @@ export class QuestionComponent implements OnInit {
 		[AnswerFormat.IMAGE]: new FormControl('')
 	}, onlyOneRequiredValidator);
 
-	constructor(private route: ActivatedRoute, private questionService: QuestionService) { }
+	constructor(
+		private route: ActivatedRoute,
+		private questionService: QuestionService,
+		private answerService: AnswerService
+	) { }
 
 	ngOnInit() {
 		this.route.paramMap.pipe(
@@ -44,9 +52,22 @@ export class QuestionComponent implements OnInit {
 
 	onSubmit() {
 		// TODO
-		const value = Object.values(this.submissionForm.controls).map<string | FileInput>(c => c.value).filter(c => c !== '')[0];
+		let value = Object.values(this.submissionForm.controls).map<string | number | FileInput>(c => c.value).filter(c => c !== '')[0];
 
-		console.log(`form value: ${value}`);
+		console.log(`form value: ${value} (${typeof value})`);
+
+		this.submissionState = 'loading';
+
+		if (typeof value === 'number') {
+			value = value.toString();
+		} else if (value instanceof FileInput) {
+			value = 'blah blah image url'; // TODO: upload image
+		}
+
+		this.answerService.submitAnswer(this.question.id, value).subscribe(
+			() => this.submissionState = 'submitted',
+			() => this.submissionState = 'unsubmitted'
+		);
 	}
 
 }

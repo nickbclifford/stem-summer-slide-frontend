@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Unit } from '../../services/unit.service';
-import { QuestionType } from '../../services/question.service';
+import { Question, QuestionType } from '../../services/question.service';
 import { NavigationStart, Router } from '@angular/router';
 
 @Component({
@@ -31,8 +31,11 @@ export class UnitComponent implements OnInit {
 		return this.unit.questions.find(q => q.questionType === type);
 	}
 
-	getIconClass(type: QuestionType) {
-		return QUESTION_TYPE_ICONS[type];
+	getIconClass(question: Question | undefined) {
+		if (!question) {
+			return 'fa-times-circle';
+		}
+		return QUESTION_TYPE_ICONS[question.questionType];
 	}
 
 }

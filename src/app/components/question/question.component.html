@@ -1,3 +1,4 @@
+<!--suppress HtmlFormInputWithoutLabel -->
 <h1>Unit {{ question.unitId }} - {{ question.questionType | titlecase }}</h1>
 <h2>{{ question.answerFormat | titlecase }} submission, max {{ question.maxPoints }} points</h2>
 <p>
@@ -38,5 +39,15 @@
 
 		<mat-error *ngIf="submissionForm.invalid">Invalid submission!</mat-error>
 	</mat-form-field>
-	<button [disabled]="submissionForm.invalid" mat-raised-button type="submit" color="primary">Submit</button>
+	<button
+		[disabled]="submissionForm.invalid || submissionState == 'submitted'"
+		mat-raised-button
+		type="submit"
+		color="primary"
+		[ngSwitch]="submissionState"
+	>
+		<span *ngSwitchCase="'unsubmitted'">Submit</span>
+		<mat-spinner *ngSwitchCase="'loading'"></mat-spinner>
+		<span *ngSwitchCase="'submitted'">Submitted!</span>
+	</button>
 </form>

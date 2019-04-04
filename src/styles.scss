@@ -7,3 +7,8 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+
+// For question page
+.mat-progress-spinner circle, .mat-spinner circle {
+	stroke: white !important;
+}
