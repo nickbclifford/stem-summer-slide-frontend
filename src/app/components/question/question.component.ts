@@ -51,20 +51,21 @@ export class QuestionComponent implements OnInit {
 	}
 
 	onSubmit() {
-		// TODO
-		let value = Object.values(this.submissionForm.controls).map<string | number | FileInput>(c => c.value).filter(c => c !== '')[0];
+		const value = Object.values(this.submissionForm.controls).map<string | number | FileInput>(c => c.value).filter(c => c !== '')[0];
 
-		console.log(`form value: ${value} (${typeof value})`);
+		console.log(value);
 
 		this.submissionState = 'loading';
 
-		if (typeof value === 'number') {
-			value = value.toString();
-		} else if (value instanceof FileInput) {
-			value = 'blah blah image url'; // TODO: upload image
+		let submit: string | File[];
+
+		if (value instanceof FileInput) {
+			submit = value.files;
+		} else {
+			submit = value.toString();
 		}
 
-		this.answerService.submitAnswer(this.question.id, value).subscribe(
+		this.answerService.submitAnswer(this.question.id, submit).subscribe(
 			() => this.submissionState = 'submitted',
 			() => this.submissionState = 'unsubmitted'
 		);

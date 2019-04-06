@@ -28,6 +28,7 @@
 			[formControlName]="formats.IMAGE"
 			placeholder="Upload an image..."
 			accept=".png, .jpg, .jpeg"
+			multiple
 		></ngx-mat-file-input>
 		<mat-icon
 			*ngIf="question.answerFormat == formats.IMAGE"
