@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { options } from '../common/http';
 import { environment } from '../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -40,6 +41,12 @@ export class AnswerService {
 		return this.http.get<Answer>(
 			environment.backendURL + '/answer/' + id,
 			options
+		).pipe(
+			map(a => {
+				// a.submittedAt is actually an ISO timestamp when we get it from the API
+				a.submittedAt = new Date(a.submittedAt);
+				return a;
+			})
 		);
 	}
 
@@ -51,4 +58,5 @@ export interface Answer {
 	points: number | null;
 	userId: number;
 	questionId: number;
+	submittedAt: Date;
 }

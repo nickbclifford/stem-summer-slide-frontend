@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {
 	MatButtonModule,
-	MatDialogModule,
+	MatDialogModule, MatExpansionModule,
 	MatFormFieldModule,
 	MatGridListModule,
 	MatIconModule,
@@ -48,7 +48,12 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 		JwtModule.forRoot({
 			config: {
 				tokenGetter: retrieveJWT,
-				whitelistedDomains: [environment.backendURL.replace(/https?:\/\//, '')]
+				whitelistedDomains: [environment.backendURL.replace(/https?:\/\//, '')],
+				blacklistedRoutes: [
+					environment.backendURL + '/auth/login',
+					environment.backendURL + '/auth/register',
+					environment.backendURL + '/auth/confirm'
+				]
 			}
 		}),
 		AppRoutingModule,
@@ -65,7 +70,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 		MatRippleModule,
 		MaterialFileInputModule,
 		MatTooltipModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		MatExpansionModule
 	],
 	entryComponents: [
 		LoginDialogComponent,

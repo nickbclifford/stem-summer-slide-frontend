@@ -2,3 +2,13 @@ mat-spinner {
 	margin-top: 10%;
 	margin-bottom: 10%;
 }
+
+.answer-content {
+	display: flex;
+	flex-flow: row wrap;
+
+	img {
+		max-height: 30%;
+		max-width: 30%;
+	}
+}

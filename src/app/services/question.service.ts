@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Omit } from '../common/types';
 import { options } from '../common/http';
 import { environment } from '../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -23,6 +24,14 @@ export class QuestionService {
 	getQuestion(id: number) {
 		return this.http.get<Question>(
 			environment.backendURL + '/question/' + id
+		).pipe(
+			map(q => {
+				for (const answer of q.answers) {
+					// answer.submittedAt is actually an ISO timestamp when we get it from the API
+					answer.submittedAt = new Date(answer.submittedAt);
+				}
+				return q;
+			})
 		);
 	}
 
@@ -56,12 +65,9 @@ export interface Question {
 	answerFormat: AnswerFormat;
 	unitId: number;
 	maxPoints: number;
+	answers: Answer[];
 }
 
 export interface QuestionWithCorrectAnswer extends Question {
 	correctAnswer: number | null;
-}
-
-export interface QuestionWithAnswers extends QuestionWithCorrectAnswer {
-	answers: Answer[];
 }

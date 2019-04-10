@@ -4,6 +4,36 @@
 <p>
 	{{ question.body }}
 </p>
+
+<div *ngIf="question.answers.length != 0">
+	<h3>Your past answers</h3>
+	<mat-accordion multi>
+		<mat-expansion-panel *ngFor="let answer of question.answers">
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					{{ answer.submittedAt | date:'EEEE, MMMM d (h:mm a)' }}
+				</mat-panel-title>
+				<mat-panel-description>
+					<ng-container *ngIf="answer.points; else notGradedYet">
+						<strong>{{ answer.points }}</strong>/{{ question.maxPoints }} points
+					</ng-container>
+					<ng-template #notGradedYet>
+						Answer not graded yet
+					</ng-template>
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<h4>Answer</h4>
+			<div class="answer-content" *ngIf="question.answerFormat == formats.IMAGE; else altSubmissions">
+				<img *ngFor="let url of answer.content.split(' '), index as i" [src]="url" alt="Submitted image {{ i }}">
+			</div>
+			<ng-template #altSubmissions>
+				{{ answer.content }}
+			</ng-template>
+		</mat-expansion-panel>
+	</mat-accordion>
+</div>
+
 <form [formGroup]="submissionForm" (ngSubmit)="onSubmit()">
 	<mat-form-field [ngSwitch]="question.answerFormat">
 		<textarea

@@ -46,6 +46,9 @@ export class QuestionComponent implements OnInit {
 				return this.questionService.getQuestion(parseInt(id, 10));
 			})
 		).subscribe(question => {
+			// Sorts in place cause JS is gross
+			question.answers.sort((a, b) => a.submittedAt.getTime() - b.submittedAt.getTime());
+
 			this.question = question;
 		});
 	}
