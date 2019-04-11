@@ -1,84 +1,103 @@
 <!--suppress HtmlFormInputWithoutLabel -->
-<h1>Unit {{ question.unitId }} - {{ question.questionType | titlecase }}</h1>
-<h2>{{ question.answerFormat | titlecase }} submission, max {{ question.maxPoints }} points</h2>
-<p>
-	{{ question.body }}
-</p>
+<ng-container *ngIf="question">
+	<h1>Unit {{ question.unitId }} - {{ question.questionType | titlecase }}</h1>
+	<h2>{{ question.answerFormat | titlecase }} submission, max {{ question.maxPoints }} points</h2>
 
-<div *ngIf="question.answers.length != 0">
-	<h3>Your past answers</h3>
-	<mat-accordion multi>
-		<mat-expansion-panel *ngFor="let answer of question.answers">
-			<mat-expansion-panel-header>
-				<mat-panel-title>
-					{{ answer.submittedAt | date:'EEEE, MMMM d (h:mm a)' }}
-				</mat-panel-title>
-				<mat-panel-description>
-					<ng-container *ngIf="answer.points; else notGradedYet">
-						<strong>{{ answer.points }}</strong>/{{ question.maxPoints }} points
-					</ng-container>
-					<ng-template #notGradedYet>
-						Answer not graded yet
-					</ng-template>
-				</mat-panel-description>
-			</mat-expansion-panel-header>
+	<mat-divider></mat-divider>
 
-			<h4>Answer</h4>
-			<div class="answer-content" *ngIf="question.answerFormat == formats.IMAGE; else altSubmissions">
-				<img *ngFor="let url of answer.content.split(' '), index as i" [src]="url" alt="Submitted image {{ i }}">
-			</div>
-			<ng-template #altSubmissions>
-				{{ answer.content }}
-			</ng-template>
-		</mat-expansion-panel>
-	</mat-accordion>
-</div>
+	<div *ngIf="question.answers.length != 0">
+		<h3>Your past answers</h3>
+		<mat-accordion multi>
+			<mat-expansion-panel *ngFor="let answer of question.answers">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						{{ answer.submittedAt | date:'EEEE, MMMM d (h:mm a)' }}
+					</mat-panel-title>
+					<mat-panel-description>
+						<ng-container *ngIf="answer.points; else notGradedYet">
+							<strong>{{ answer.points }}</strong>/{{ question.maxPoints }} points
+						</ng-container>
+						<ng-template #notGradedYet>
+							Answer not graded yet
+						</ng-template>
+					</mat-panel-description>
+				</mat-expansion-panel-header>
 
-<form [formGroup]="submissionForm" (ngSubmit)="onSubmit()">
-	<mat-form-field [ngSwitch]="question.answerFormat">
-		<textarea
-			*ngSwitchCase="formats.TEXT"
-			[formControlName]="formats.TEXT"
-			matInput
-			placeholder="Type your answer here..."
-		></textarea>
+				<h4>Answer</h4>
+				<div class="answer-content" *ngIf="question.answerFormat == formats.IMAGE; else altSubmissions">
+					<img *ngFor="let url of answer.content.split(' '), index as i" [src]="url" alt="Submitted image {{ i }}">
+				</div>
+				<ng-template #altSubmissions>
+					{{ answer.content }}
+				</ng-template>
+			</mat-expansion-panel>
+		</mat-accordion>
+	</div>
 
-		<input
-			*ngSwitchCase="formats.NUMERICAL"
-			[formControlName]="formats.NUMERICAL"
-			matInput
-			type="number"
-			placeholder="Type your answer here..."
-		>
+	<br>
+	<mat-divider></mat-divider>
+	<br>
 
-		<!-- matSuffixes have to be a direct descendant of a mat-form-field, so it won't let me put it in an ng-container -->
-		<ngx-mat-file-input
-			#fileInput
-			[style.display]="question.answerFormat != formats.IMAGE ? 'none' : ''"
-			[formControlName]="formats.IMAGE"
-			placeholder="Upload an image..."
-			accept=".png, .jpg, .jpeg"
-			multiple
-		></ngx-mat-file-input>
-		<mat-icon
-			*ngIf="question.answerFormat == formats.IMAGE"
-			(click)="!fileInput.empty && fileInput.clear($event)"
-			matSuffix
-		>
-			{{ fileInput.empty ? 'add_a_photo' : 'clear' }}
-		</mat-icon>
+	<mat-card>
+		<mat-card-content>{{ question.body }}</mat-card-content>
+		<mat-card-actions *ngIf="userService.$ | async; else notLoggedIn">
+			<form [formGroup]="submissionForm" (ngSubmit)="onSubmit()">
+				<mat-form-field [ngSwitch]="question.answerFormat">
+					<textarea
+						*ngSwitchCase="formats.TEXT"
+						[formControlName]="formats.TEXT"
+						matInput
+						placeholder="Type your answer here..."
+					></textarea>
 
-		<mat-error *ngIf="submissionForm.invalid">Invalid submission!</mat-error>
-	</mat-form-field>
-	<button
-		[disabled]="submissionForm.invalid || submissionState == 'submitted'"
-		mat-raised-button
-		type="submit"
-		color="primary"
-		[ngSwitch]="submissionState"
-	>
-		<span *ngSwitchCase="'unsubmitted'">Submit</span>
-		<mat-spinner *ngSwitchCase="'loading'"></mat-spinner>
-		<span *ngSwitchCase="'submitted'">Submitted!</span>
-	</button>
-</form>
+					<input
+						*ngSwitchCase="formats.NUMERICAL"
+						[formControlName]="formats.NUMERICAL"
+						matInput
+						type="number"
+						placeholder="Type your answer here..."
+					>
+
+					<!-- matSuffixes have to be a direct descendant of a mat-form-field, so it won't let me put it in an ng-container -->
+					<ngx-mat-file-input
+						#fileInput
+						[style.display]="question.answerFormat != formats.IMAGE ? 'none' : ''"
+						[formControlName]="formats.IMAGE"
+						placeholder="Upload an image..."
+						accept=".png, .jpg, .jpeg"
+						multiple
+					></ngx-mat-file-input>
+					<mat-icon
+						*ngIf="question.answerFormat == formats.IMAGE"
+						(click)="!fileInput.empty && fileInput.clear($event)"
+						matSuffix
+					>
+						{{ fileInput.empty ? 'add_a_photo' : 'clear' }}
+					</mat-icon>
+
+					<mat-error *ngIf="submissionForm.invalid">Invalid submission!</mat-error>
+				</mat-form-field>
+				<button
+					[disabled]="submissionForm.invalid || submissionState != 'unsubmitted'"
+					mat-raised-button
+					type="submit"
+					color="primary"
+					[ngSwitch]="submissionState"
+				>
+					<span *ngSwitchCase="'unsubmitted'">Submit</span>
+					<mat-spinner *ngSwitchCase="'loading'" diameter="30" strokeWidth="4"></mat-spinner>
+					<span *ngSwitchCase="'submitted'">Submitted!</span>
+				</button>
+		</form>
+		</mat-card-actions>
+		<ng-template #notLoggedIn>
+			<p class="mat-error">You must be logged in to make a submission.</p>
+		</ng-template>
+	</mat-card>
+
+	<br>
+	<mat-divider></mat-divider>
+	<br>
+
+	<a mat-raised-button color="primary" routerLink="/home/{{ question.unitId }}">Back to all Unit {{ question.unitId }} questions</a>
+</ng-container>

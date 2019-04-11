@@ -10,7 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {
 	MatButtonModule,
-	MatDialogModule, MatExpansionModule,
+	MatCardModule,
+	MatDialogModule,
+	MatDividerModule,
+	MatExpansionModule,
 	MatFormFieldModule,
 	MatGridListModule,
 	MatIconModule,
@@ -71,7 +74,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 		MaterialFileInputModule,
 		MatTooltipModule,
 		MatProgressSpinnerModule,
-		MatExpansionModule
+		MatExpansionModule,
+		MatCardModule,
+		MatDividerModule
 	],
 	entryComponents: [
 		LoginDialogComponent,

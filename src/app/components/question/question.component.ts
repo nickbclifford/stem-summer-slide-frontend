@@ -7,6 +7,7 @@ import { FileInput } from 'ngx-material-file-input';
 import { ErrorStateMatcher } from '@angular/material';
 import { CrossFieldErrorMatcher } from '../../common/cross-field-error-matcher';
 import { AnswerService } from '../../services/answer.service';
+import { UserService } from '../../services/user.service';
 
 type SubmissionState = 'unsubmitted' | 'loading' | 'submitted';
 
@@ -33,7 +34,8 @@ export class QuestionComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private questionService: QuestionService,
-		private answerService: AnswerService
+		private answerService: AnswerService,
+		private userService: UserService
 	) { }
 
 	ngOnInit() {
