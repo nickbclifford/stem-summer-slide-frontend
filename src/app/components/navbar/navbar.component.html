@@ -1,9 +1,11 @@
 <mat-toolbar color="primary">
-	<a routerLink="/home">STEM Summer Slide</a>
+	<a class="home" mat-button routerLink="/home">STEM Summer Slide</a>
+	<a mat-button routerLink="/units">All Units</a>
+	<a mat-button routerLink="/about">About</a>
 	<span class="spacer"></span>
 	<ng-container *ngIf="(userService.$ | async) as user; else notLoggedIn">
 		<!-- TODO: routerLink to profile page -->
-		<span>Hello, {{ user.name }}</span>
+		<span class="hello">Hello, {{ user.name }}</span>
 		<button mat-raised-button color="primary" (click)="logout()">Logout</button>
 	</ng-container>
 	<ng-template #notLoggedIn>

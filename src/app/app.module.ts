@@ -34,6 +34,7 @@ import { QuestionComponent } from './components/question/question.component';
 import { LetDirective } from './common/let.directive';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
 	declarations: [
@@ -44,7 +45,8 @@ import { HomeComponent } from './components/home/home.component';
 		UnitDialogComponent,
 		QuestionComponent,
 		LetDirective,
-		HomeComponent
+		HomeComponent,
+		AboutComponent
 	],
 	imports: [
 		BrowserModule,
