@@ -1,6 +1,19 @@
-<mat-action-list>
-	<button *ngFor="let unit of units"
-			mat-list-item (click)="handleUnit(unit)">
-		Unit {{ unit.id }}: {{ unit.title }}
-	</button>
-</mat-action-list>
+<ng-container *ngIf="(userService.$ | async) as user; else notLoggedIn">
+	<h1>Welcome back, {{ user.name.split(' ')[0] }}</h1>
+
+	<a *ngIf="(userService.getNextQuestion() | async) as nextQuestion; else noNextQuestion"
+	   mat-raised-button
+	   color="primary"
+	   routerLink="/question/{{ nextQuestion.id }}"
+	>
+		Move on to {{ nextQuestion.questionType | titlecase }} (Unit {{ nextQuestion.unitId }})
+	</a>
+	<ng-template #noNextQuestion>
+		<a mat-raised-button color="primary" routerLink="/units">
+			Get started on a new unit
+		</a>
+	</ng-template>
+</ng-container>
+<ng-template #notLoggedIn>
+	<h1>Welcome to STEM Summer Slide</h1>
+</ng-template>

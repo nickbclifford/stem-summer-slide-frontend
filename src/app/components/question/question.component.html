@@ -32,10 +32,10 @@
 				</ng-template>
 			</mat-expansion-panel>
 		</mat-accordion>
+		<br>
+		<mat-divider></mat-divider>
 	</div>
 
-	<br>
-	<mat-divider></mat-divider>
 	<br>
 
 	<mat-card>
@@ -99,5 +99,5 @@
 	<mat-divider></mat-divider>
 	<br>
 
-	<a mat-raised-button color="primary" routerLink="/home/{{ question.unitId }}">Back to all Unit {{ question.unitId }} questions</a>
+	<a mat-raised-button color="primary" routerLink="/units/{{ question.unitId }}">Back to all Unit {{ question.unitId }} questions</a>
 </ng-container>

@@ -56,9 +56,9 @@ export class QuestionComponent implements OnInit {
 	}
 
 	onSubmit() {
-		const value = Object.values(this.submissionForm.controls).map<string | number | FileInput>(c => c.value).filter(c => c !== '')[0];
-
-		console.log(value);
+		const value = Object.values(this.submissionForm.controls)
+			.map<string | number | FileInput>(c => c.value)
+			.filter(c => c !== '')[0];
 
 		this.submissionState = 'loading';
 

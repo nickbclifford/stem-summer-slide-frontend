@@ -28,21 +28,23 @@ import {
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { APIInterceptor } from './common/api-interceptor';
-import { HomeComponent } from './components/home/home.component';
-import { UnitComponent } from './components/unit/unit.component';
+import { UnitsComponent } from './components/units/units.component';
+import { UnitDialogComponent } from './components/unit-dialog/unit-dialog.component';
 import { QuestionComponent } from './components/question/question.component';
 import { LetDirective } from './common/let.directive';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		NavbarComponent,
 		LoginDialogComponent,
-		HomeComponent,
-		UnitComponent,
+		UnitsComponent,
+		UnitDialogComponent,
 		QuestionComponent,
-		LetDirective
+		LetDirective,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -80,7 +82,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 	],
 	entryComponents: [
 		LoginDialogComponent,
-		UnitComponent
+		UnitDialogComponent
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true }

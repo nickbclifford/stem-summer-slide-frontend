@@ -1,0 +1,6 @@
+<mat-action-list>
+	<button *ngFor="let unit of units"
+			mat-list-item (click)="handleUnit(unit)">
+		Unit {{ unit.id }}: {{ unit.title }}
+	</button>
+</mat-action-list>

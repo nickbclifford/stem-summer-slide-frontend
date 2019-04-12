@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, of } from 'rxjs';
 import { AuthService } from './auth.service';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { options } from '../common/http';
 import { Possibly } from '../common/types';
+import { Question } from './question.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -35,7 +36,18 @@ export class UserService {
 		);
 	}
 
+	getNextQuestion() {
+		return this.http.get<{ nextQuestion: NextQuestion | null }>(
+			environment.backendURL + '/user/next-question',
+			options
+		).pipe(
+			map(r => r.nextQuestion)
+		);
+	}
+
 }
+
+export type NextQuestion = Pick<Question, 'id' | 'questionType' | 'unitId'>;
 
 export interface User {
 	id: number;

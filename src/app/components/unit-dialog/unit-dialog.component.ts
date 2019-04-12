@@ -5,16 +5,16 @@ import { Question, QuestionType } from '../../services/question.service';
 import { NavigationStart, Router } from '@angular/router';
 
 @Component({
-	selector: 'app-unit',
-	templateUrl: './unit.component.html',
-	styleUrls: ['./unit.component.scss']
+	selector: 'app-unit-dialog',
+	templateUrl: './unit-dialog.component.html',
+	styleUrls: ['./unit-dialog.component.scss']
 })
-export class UnitComponent implements OnInit {
+export class UnitDialogComponent implements OnInit {
 
 	types: QuestionType[] = Object.values(QuestionType);
 
 	constructor(
-		private dialogRef: MatDialogRef<UnitComponent>,
+		private dialogRef: MatDialogRef<UnitDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) private unit: Unit,
 		private router: Router
 	) {	}
