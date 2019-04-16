@@ -1,16 +1,17 @@
+<!--suppress HtmlFormInputWithoutLabel -->
 <h1 mat-dialog-title>Login</h1>
-<div mat-dialog-content>
+<form [formGroup]="formGroup" (ngSubmit)="onLogin()" mat-dialog-content>
 	<mat-form-field>
-		<input matInput placeholder="Email" [formControl]="email" required>
-		<mat-error *ngIf="email.invalid">{{ emailErrorMessage }}</mat-error>
+		<input matInput placeholder="Email" formControlName="email" required>
+		<mat-error *ngIf="fc.email.invalid">{{ emailErrorMessage }}</mat-error>
 	</mat-form-field>
 	<mat-form-field>
-		<input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'" [formControl]="password" required>
+		<input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
 		<mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-		<mat-error *ngIf="password.invalid">Password required!</mat-error>
+		<mat-error *ngIf="fc.password.invalid">Password required!</mat-error>
 	</mat-form-field>
-</div>
+</form>
 <div mat-dialog-actions>
 	<button mat-button (click)="onCancel()">Cancel</button>
-	<button mat-button (click)="onLogin()" color="primary">Login</button>
+	<button mat-button (click)="onLogin()" color="primary" [disabled]="formGroup.invalid">Login</button>
 </div>

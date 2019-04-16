@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,14 +10,17 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginDialogComponent {
 
-	// TODO: Use a form group.
+	formGroup = new FormGroup({
+		email: new FormControl('', [
+			Validators.required,
+			Validators.email
+		]),
+		password: new FormControl('', Validators.required)
+	});
 
-	email = new FormControl('', [
-		Validators.required,
-		Validators.email
-	]);
+	// For shorthand in template
+	fc = this.formGroup.controls;
 
-	password = new FormControl('', Validators.required);
 	hidePassword = true;
 
 	constructor(
@@ -26,9 +29,9 @@ export class LoginDialogComponent {
 	) { }
 
 	get emailErrorMessage() {
-		if (this.email.hasError('required')) {
+		if (this.fc.email.hasError('required')) {
 			return 'Email required!';
-		} else if (this.email.hasError('email')) {
+		} else if (this.fc.email.hasError('email')) {
 			return 'Invalid email address!';
 		}
 	}
@@ -38,12 +41,10 @@ export class LoginDialogComponent {
 	}
 
 	onLogin() {
-		this.authService.login(this.email.value, this.password.value).subscribe(
+		const { email, password } = this.formGroup.value;
+		this.authService.login(email, password).subscribe(
 			() => this.dialogRef.close(),
-			() => {
-				this.email.reset();
-				this.password.reset();
-			}
+			() => this.formGroup.reset()
 		);
 	}
 
