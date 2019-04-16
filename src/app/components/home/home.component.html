@@ -1,5 +1,5 @@
-<ng-container *ngIf="(userService.$ | async) as user; else notLoggedIn">
-	<h1>Welcome back, {{ user.name.split(' ')[0] }}</h1>
+<ng-container *ngIf="user; else notLoggedIn">
+	<h1>Welcome back, {{ user.name.split(' ')[0] //noinspection UnresolvedVariable }}</h1>
 
 	<a *ngIf="nextQuestion; else noNextQuestion"
 	   mat-raised-button
@@ -16,4 +16,5 @@
 </ng-container>
 <ng-template #notLoggedIn>
 	<h1>Welcome to STEM Summer Slide</h1>
+	<button mat-raised-button color="primary" (click)="onRegister()">Register now!</button>
 </ng-template>

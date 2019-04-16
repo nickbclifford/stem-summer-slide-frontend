@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginDialogComponent {
 
+	// TODO: Use a form group.
+
 	email = new FormControl('', [
 		Validators.required,
 		Validators.email
