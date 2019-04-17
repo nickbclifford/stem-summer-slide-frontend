@@ -4,7 +4,7 @@ import { UnitsComponent } from './components/units/units.component';
 import { QuestionComponent } from './components/question/question.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
-import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
+import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
 
 const routes: Routes = [
 	{
@@ -38,18 +38,8 @@ const routes: Routes = [
 		component: AboutComponent
 	},
 	{
-		path: 'admin',
-		children: [
-			{
-				path: '',
-				redirectTo: '/admin/home',
-				pathMatch: 'full'
-			},
-			{
-				path: 'home',
-				component: AdminHomeComponent
-			}
-		]
+		path: 'admin/:stage',
+		component: AdminMainComponent
 	}
 ];
 

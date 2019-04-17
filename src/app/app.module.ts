@@ -21,7 +21,7 @@ import {
 	MatListModule,
 	MatProgressSpinnerModule,
 	MatRippleModule,
-	MatSnackBarModule,
+	MatSnackBarModule, MatTabsModule,
 	MatToolbarModule,
 	MatTooltipModule
 } from '@angular/material';
@@ -36,7 +36,10 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
-import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
+import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
+import { AdminUnitsComponent } from './components/admin/admin-units/admin-units.component';
+import { AdminQuestionsComponent } from './components/admin/admin-questions/admin-questions.component';
+import { AdminAnswersComponent } from './components/admin/admin-answers/admin-answers.component';
 
 @NgModule({
 	declarations: [
@@ -50,7 +53,10 @@ import { AdminHomeComponent } from './components/admin/admin-home/admin-home.com
 		HomeComponent,
 		AboutComponent,
 		RegisterDialogComponent,
-		AdminHomeComponent
+		AdminMainComponent,
+		AdminUnitsComponent,
+		AdminQuestionsComponent,
+		AdminAnswersComponent
 	],
 	imports: [
 		BrowserModule,
@@ -84,7 +90,8 @@ import { AdminHomeComponent } from './components/admin/admin-home/admin-home.com
 		MatProgressSpinnerModule,
 		MatExpansionModule,
 		MatCardModule,
-		MatDividerModule
+		MatDividerModule,
+		MatTabsModule
 	],
 	entryComponents: [
 		LoginDialogComponent,

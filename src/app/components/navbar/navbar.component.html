@@ -2,7 +2,7 @@
 	<a class="home" mat-button routerLink="/home">STEM Summer Slide</a>
 	<a mat-button routerLink="/units">All Units</a>
 	<a mat-button routerLink="/about">About</a>
-	<a *ngIf="user?.admin" mat-button routerLink="/admin/home">Administration</a>
+	<a *ngIf="user?.admin" mat-button routerLink="/admin/units">Administration</a>
 	<span class="spacer"></span>
 	<ng-container *ngIf="user; else notLoggedIn">
 		<!-- TODO: routerLink to profile page -->
