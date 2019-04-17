@@ -4,6 +4,7 @@ import { UnitsComponent } from './components/units/units.component';
 import { QuestionComponent } from './components/question/question.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
+import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 
 const routes: Routes = [
 	{
@@ -35,6 +36,20 @@ const routes: Routes = [
 	{
 		path: 'about',
 		component: AboutComponent
+	},
+	{
+		path: 'admin',
+		children: [
+			{
+				path: '',
+				redirectTo: '/admin/home',
+				pathMatch: 'full'
+			},
+			{
+				path: 'home',
+				component: AdminHomeComponent
+			}
+		]
 	}
 ];
 

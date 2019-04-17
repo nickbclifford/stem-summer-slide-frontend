@@ -36,6 +36,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
 
 @NgModule({
 	declarations: [
@@ -48,7 +49,8 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
 		LetDirective,
 		HomeComponent,
 		AboutComponent,
-		RegisterDialogComponent
+		RegisterDialogComponent,
+		AdminHomeComponent
 	],
 	imports: [
 		BrowserModule,
