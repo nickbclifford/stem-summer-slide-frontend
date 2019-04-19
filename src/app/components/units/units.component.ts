@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Unit, UnitService } from '../../services/unit.service';
+import { SimpleUnit, Unit, UnitService } from '../../services/unit.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -13,7 +13,7 @@ import { UnitDialogComponent } from '../unit-dialog/unit-dialog.component';
 })
 export class UnitsComponent implements OnInit {
 
-	units: Unit[] = [];
+	units: SimpleUnit[] = [];
 	currentUnit: Unit | null = null;
 
 	constructor(

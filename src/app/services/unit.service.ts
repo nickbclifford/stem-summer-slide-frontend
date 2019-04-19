@@ -12,7 +12,7 @@ export class UnitService {
 	constructor(private http: HttpClient) { }
 
 	getAllUnits() {
-		return this.http.get<Unit[]>(
+		return this.http.get<SimpleUnit[]>(
 			environment.backendURL + '/unit',
 			options
 		);
@@ -35,9 +35,13 @@ export class UnitService {
 
 }
 
-export interface Unit {
+export interface SimpleUnit {
 	id: number;
 	title: string;
 	description: string;
+	questions: Array<Pick<Question, 'id' | 'questionType'>>;
+}
+
+export interface Unit extends SimpleUnit {
 	questions: Question[];
 }
