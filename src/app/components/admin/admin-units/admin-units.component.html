@@ -1,7 +1,10 @@
+<!--suppress HtmlFormInputWithoutLabel -->
 <div class="container">
 	<div class="side">
-		<h2>All Units</h2>
-		<!-- TODO: "Add New Unit" button -->
+		<div class="header">
+			<h2>All Units</h2>
+			<button mat-raised-button color="primary">Add New Unit</button>
+		</div>
 		<mat-list>
 			<ng-container *ngFor="let unit of units; last as isLast">
 				<mat-list-item (click)="selectedUnit = unit">Unit {{ unit.id }}: {{ unit.title }}</mat-list-item>
@@ -14,7 +17,16 @@
 		<h2>Edit Unit</h2>
 		<div *ngIf="selectedUnit; else noneSelected">
 			<h3>Unit {{ selectedUnit.id }}</h3>
-			<!-- TODO: Make form -->
+			<form [formGroup]="unitForm">
+				<mat-form-field>
+					<input matInput placeholder="Title" formControlName="title" required>
+					<mat-error *ngIf="fc.title.invalid">Title required!</mat-error>
+				</mat-form-field>
+				<mat-form-field>
+					<textarea matInput placeholder="Description" formControlName="description" required></textarea>
+					<mat-error *ngIf="fc.description.invalid">Description required!</mat-error>
+				</mat-form-field>
+			</form>
 		</div>
 		<ng-template #noneSelected>
 			<!-- TODO: Center text, maybe make gray -->

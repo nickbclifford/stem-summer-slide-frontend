@@ -1,5 +1,5 @@
 <h1>Administration</h1>
-<mat-tab-group [selectedIndex]="selectedStage" (selectedTabChange)="onTabChange($event.index)" mat-align-tabs="center">
+<mat-tab-group [selectedIndex]="selectedStage" (selectedIndexChange)="onTabChange($event)" mat-align-tabs="center">
 	<mat-tab label="Units">
 		<!-- For lazy loading -->
 		<ng-template matTabContent>
