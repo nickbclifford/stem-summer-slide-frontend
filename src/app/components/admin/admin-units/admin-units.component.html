@@ -3,11 +3,11 @@
 	<div class="side">
 		<div class="header">
 			<h2>All Units</h2>
-			<button mat-raised-button color="primary">Add New Unit</button>
+			<button mat-raised-button (click)="newUnit()" color="primary">Add New Unit</button>
 		</div>
 		<mat-list>
 			<ng-container *ngFor="let unit of units; last as isLast">
-				<mat-list-item (click)="selectedUnit = unit">Unit {{ unit.id }}: {{ unit.title }}</mat-list-item>
+				<mat-list-item (click)="selectUnit(unit)">Unit {{ unit.id }}: {{ unit.title }}</mat-list-item>
 				<mat-divider *ngIf="!isLast"></mat-divider>
 			</ng-container>
 		</mat-list>
@@ -17,7 +17,7 @@
 		<h2>Edit Unit</h2>
 		<div *ngIf="selectedUnit; else noneSelected">
 			<h3>Unit {{ selectedUnit.id }}</h3>
-			<form [formGroup]="unitForm">
+			<form [formGroup]="unitForm" (ngSubmit)="save()">
 				<mat-form-field>
 					<input matInput placeholder="Title" formControlName="title" required>
 					<mat-error *ngIf="fc.title.invalid">Title required!</mat-error>
@@ -26,6 +26,23 @@
 					<textarea matInput placeholder="Description" formControlName="description" required></textarea>
 					<mat-error *ngIf="fc.description.invalid">Description required!</mat-error>
 				</mat-form-field>
+				<mat-divider></mat-divider>
+				<ng-container *ngIf="selectedUnit.questions.length === 0; else questionLinks">
+					<p>After saving this unit, go to the <em>Questions</em> tab to add a question.</p>
+				</ng-container>
+				<ng-template #questionLinks>
+					<h4>Questions</h4>
+					<p>Click to edit!</p>
+					<mat-chip-list>
+						<mat-chip *ngFor="let question of selectedUnit.questions" routerLink="/admin/questions/{{ question.id }}">
+							{{ question.questionType | titlecase }}
+						</mat-chip>
+					</mat-chip-list>
+					<br>
+				</ng-template>
+				<mat-divider></mat-divider>
+				<br>
+				<button mat-raised-button type="submit" color="primary" [disabled]="unitForm.invalid || unitForm.pristine">Save Unit</button>
 			</form>
 		</div>
 		<ng-template #noneSelected>

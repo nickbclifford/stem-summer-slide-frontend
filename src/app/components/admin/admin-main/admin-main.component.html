@@ -3,12 +3,12 @@
 	<mat-tab label="Units">
 		<!-- For lazy loading -->
 		<ng-template matTabContent>
-			<app-admin-units></app-admin-units>
+			<app-admin-units [id]="id"></app-admin-units>
 		</ng-template>
 	</mat-tab>
 	<mat-tab label="Questions">
 		<ng-template matTabContent>
-			<app-admin-questions></app-admin-questions>
+			<app-admin-questions [id]="id"></app-admin-questions>
 		</ng-template>
 	</mat-tab>
 	<mat-tab label="Answers">

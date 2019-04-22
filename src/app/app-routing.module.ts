@@ -39,7 +39,16 @@ const routes: Routes = [
 	},
 	{
 		path: 'admin/:stage',
-		component: AdminMainComponent
+		children: [
+			{
+				path: '',
+				component: AdminMainComponent
+			},
+			{
+				path: ':id',
+				component: AdminMainComponent
+			}
+		]
 	}
 ];
 

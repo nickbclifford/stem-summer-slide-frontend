@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'app-admin-questions',
 	templateUrl: './admin-questions.component.html',
 	styleUrls: ['./admin-questions.component.scss']
 })
-export class AdminQuestionsComponent implements OnInit {
+export class AdminQuestionsComponent {
+
+	@Input() id: number | null = null;
 
 	constructor() { }
-
-	ngOnInit() {
-	}
 
 }

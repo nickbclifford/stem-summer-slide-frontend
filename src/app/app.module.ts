@@ -11,6 +11,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import {
 	MatButtonModule,
 	MatCardModule,
+	MatChipsModule,
 	MatDialogModule,
 	MatDividerModule,
 	MatExpansionModule,
@@ -21,7 +22,8 @@ import {
 	MatListModule,
 	MatProgressSpinnerModule,
 	MatRippleModule,
-	MatSnackBarModule, MatTabsModule,
+	MatSnackBarModule,
+	MatTabsModule,
 	MatToolbarModule,
 	MatTooltipModule
 } from '@angular/material';
@@ -91,7 +93,8 @@ import { AdminAnswersComponent } from './components/admin/admin-answers/admin-an
 		MatExpansionModule,
 		MatCardModule,
 		MatDividerModule,
-		MatTabsModule
+		MatTabsModule,
+		MatChipsModule
 	],
 	entryComponents: [
 		LoginDialogComponent,
