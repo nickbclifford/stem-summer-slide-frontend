@@ -13,7 +13,7 @@ export class QuestionService {
 
 	constructor(private http: HttpClient) { }
 
-	newQuestion(question: Omit<Question, 'id'>) {
+	newQuestion(question: QuestionInput) {
 		return this.http.post<{ id: number }>(
 			environment.backendURL + '/question',
 			question,
@@ -35,7 +35,7 @@ export class QuestionService {
 		);
 	}
 
-	modifyQuestion(id: number, questionProps: Partial<Omit<QuestionWithCorrectAnswer, 'id'>>) {
+	saveQuestion(id: number, questionProps: QuestionInput) {
 		return this.http.patch(
 			environment.backendURL + '/question/' + id,
 			questionProps,
@@ -71,3 +71,5 @@ export interface Question {
 export interface QuestionWithCorrectAnswer extends Question {
 	correctAnswer: number | null;
 }
+
+export type QuestionInput = Omit<QuestionWithCorrectAnswer, 'id' | 'answers'>;

@@ -21,7 +21,7 @@ import {
 	MatInputModule,
 	MatListModule,
 	MatProgressSpinnerModule,
-	MatRippleModule,
+	MatRippleModule, MatSelectModule,
 	MatSnackBarModule,
 	MatTabsModule,
 	MatToolbarModule,
@@ -94,7 +94,8 @@ import { AdminAnswersComponent } from './components/admin/admin-answers/admin-an
 		MatCardModule,
 		MatDividerModule,
 		MatTabsModule,
-		MatChipsModule
+		MatChipsModule,
+		MatSelectModule
 	],
 	entryComponents: [
 		LoginDialogComponent,

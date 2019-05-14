@@ -1,3 +1,67 @@
-<p>
-  admin-questions works!
-</p>
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="container">
+	<div class="side">
+		<div class="header">
+			<h2>Questions</h2>
+			<mat-form-field>
+				<mat-label>Unit</mat-label>
+				<mat-select [(value)]="unitId">
+					<mat-option *ngFor="let unit of units" [value]="unit.id">Unit {{ unit.id }}: {{ unit.title }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<button mat-raised-button color="primary" (click)="newQuestion()" [disabled]="!unitId">Add New Question</button>
+		</div>
+		<ng-container *ngIf="unitId; else noUnitSelected">
+			<mat-action-list *ngIf="questions.length > 0; else unitNoQuestions">
+				<ng-container *ngFor="let question of questions; last as isLast">
+					<button mat-list-item (click)="selectQuestion(question.id)">{{ question.questionType | titlecase }}</button>
+					<mat-divider *ngIf="!isLast"></mat-divider>
+				</ng-container>
+			</mat-action-list>
+			<ng-template #unitNoQuestions>
+				<p>No questions in unit.</p>
+			</ng-template>
+		</ng-container>
+		<ng-template #noUnitSelected>
+			<p>Click on a unit in the dropdown above to select it!</p>
+		</ng-template>
+	</div>
+	<mat-divider vertical></mat-divider>
+	<div class="side">
+		<h2>Edit Question</h2>
+		<form *ngIf="selectedQuestion; else noQuestionSelected" [formGroup]="questionForm" (ngSubmit)="save()">
+			<mat-form-field>
+				<textarea matInput placeholder="Body" formControlName="body" required></textarea>
+				<mat-error *ngIf="fc.body.invalid">Body required!</mat-error>
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Question Type</mat-label>
+				<mat-select formControlName="questionType" required>
+					<mat-option *ngFor="let type of types" [value]="type">{{ type | titlecase }}</mat-option>
+				</mat-select>
+				<mat-error *ngIf="fc.questionType.invalid">Question type required!</mat-error>
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Answer Format</mat-label>
+				<mat-select formControlName="answerFormat" required>
+					<mat-option *ngFor="let format of allFormats" [value]="format">{{ format | titlecase }}</mat-option>
+				</mat-select>
+				<mat-error *ngIf="fc.answerFormat.invalid">Answer format required!</mat-error>
+			</mat-form-field>
+			<mat-form-field>
+				<input matInput type="number" min="0" placeholder="Maximum Points" formControlName="maxPoints" required>
+				<mat-error *ngIf="fc.maxPoints.invalid">Maximum point value required!</mat-error>
+			</mat-form-field>
+			<mat-form-field *ngIf="fc.answerFormat.value === formats.NUMERICAL as isNumerical">
+				<input matInput type="number" placeholder="Correct Answer" formControlName="correctAnswer" [disabled]="!isNumerical">
+				<mat-error *ngIf="isNumerical && !fc.correctAnswer.value">Numerical questions require correct answers!</mat-error>
+			</mat-form-field>
+			<br>
+			<button mat-raised-button type="submit" color="primary" [disabled]="questionForm.invalid || questionForm.pristine">Save Question</button>
+		</form>
+		<ng-template #noQuestionSelected>
+			<!-- TODO: Center text, maybe make gray -->
+			<p>Click on a question in the list to select it!</p>
+		</ng-template>
+	</div>
+</div>

@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
 @Component({
 	selector: 'app-admin-units',
 	templateUrl: './admin-units.component.html',
-	styleUrls: ['./admin-units.component.scss']
+	styleUrls: ['./admin-units.component.scss', '../admin.shared.scss']
 })
 export class AdminUnitsComponent implements OnInit {
 
