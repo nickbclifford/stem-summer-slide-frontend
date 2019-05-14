@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SimpleUnit, UnitService } from '../../../services/unit.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { tap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
 @Component({
@@ -28,7 +27,8 @@ export class AdminUnitsComponent implements OnInit {
 	constructor(private unitService: UnitService, private snackBar: MatSnackBar, private location: Location) { }
 
 	ngOnInit() {
-		this.updateUnits().subscribe(() => {
+		this.unitService.units$.subscribe(units => {
+			this.units = units;
 			if (this.id) {
 				const unit = this.units.find(u => u.id === this.id);
 				if (unit) {
@@ -57,19 +57,9 @@ export class AdminUnitsComponent implements OnInit {
 	save() {
 		const { id, questions } = this.selectedUnit!;
 		const { title, description } = this.unitForm.value;
-		this.unitService.saveUnit(id, title, description, questions.map(q => q.id)).subscribe(
-			() => {
-				this.snackBar.open('Successfully saved unit!', 'Dismiss');
-				this.updateUnits();
-			},
-			() => this.unitForm.reset()
-		);
+		this.unitService.saveUnit(id, title, description, questions.map(q => q.id)).subscribe(() => {
+			this.snackBar.open('Successfully saved unit!', 'Dismiss');
+			this.unitService.refreshUnits().subscribe();
+		});
 	}
-
-	updateUnits() {
-		return this.unitService.getAllUnits().pipe(
-			tap(units => this.units = units)
-		);
-	}
-
 }

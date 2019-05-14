@@ -1,7 +1,7 @@
 <h1>All Units</h1>
 <mat-action-list>
-	<button *ngFor="let unit of units"
-			mat-list-item (click)="handleUnit(unit)">
+	<a *ngFor="let unit of unitService.units$ | async"
+			mat-list-item routerLink="/units/{{ unit.id }}">
 		Unit {{ unit.id }}: {{ unit.title }}
-	</button>
+	</a>
 </mat-action-list>

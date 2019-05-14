@@ -3,18 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { Question } from './question.service';
 import { options } from '../common/http';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class UnitService {
 
+	units$ = new BehaviorSubject<SimpleUnit[]>([]);
+
 	constructor(private http: HttpClient) { }
 
-	getAllUnits() {
+	refreshUnits() {
 		return this.http.get<SimpleUnit[]>(
 			environment.backendURL + '/unit',
 			options
+		).pipe(
+			tap(u => this.units$.next(u))
 		);
 	}
 

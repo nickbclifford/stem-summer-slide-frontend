@@ -45,10 +45,7 @@ export class RegisterDialogComponent {
 		console.log(this.formGroup.value);
 
 		const { name, email, password } = this.formGroup.value;
-		this.authService.register(name, email, password).subscribe(
-			() => this.dialogRef.close(),
-			() => this.formGroup.reset()
-		);
+		this.authService.register(name, email, password).subscribe(() => this.dialogRef.close());
 	}
 
 }

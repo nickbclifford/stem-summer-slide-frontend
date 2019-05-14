@@ -4,6 +4,8 @@ import { SimpleUnit, UnitService } from '../../../services/unit.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { pickProps } from '../../../common/utils';
+import { MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-admin-questions',
@@ -32,10 +34,16 @@ export class AdminQuestionsComponent implements OnInit {
 	allFormats: AnswerFormat[] = Object.values(AnswerFormat);
 	formats = AnswerFormat;
 
-	constructor(private questionService: QuestionService, private unitService: UnitService, private location: Location) { }
+	constructor(
+		private questionService: QuestionService,
+		private unitService: UnitService,
+		private location: Location,
+		private snackBar: MatSnackBar
+	) { }
 
 	ngOnInit() {
-		this.updateUnits();
+		this.unitService.units$.subscribe(u => this.units = u);
+
 		if (this.id) {
 			this.selectQuestion(this.id);
 		}
@@ -65,16 +73,28 @@ export class AdminQuestionsComponent implements OnInit {
 			maxPoints: 0,
 			correctAnswer: null
 		};
+		this.id = null;
+		this.location.go(`/admin/questions`);
 		this.updateForm();
 	}
 
 	save() {
-		// TODO
-		console.log(this.questionForm.value);
-	}
+		const questionInput = { unitId: this.unitId!, ...this.questionForm.value };
 
-	updateUnits() {
-		this.unitService.getAllUnits().subscribe(u => this.units = u);
+		let save$: Observable<{id?: number}>;
+		if (this.id) {
+			save$ = this.questionService.saveQuestion(this.id, questionInput);
+		} else {
+			save$ = this.questionService.newQuestion(questionInput);
+		}
+
+		save$.subscribe(({ id }) => {
+			this.snackBar.open('Successfully saved question!', 'Dismiss');
+			this.unitService.refreshUnits().subscribe();
+			if (!this.id) {
+				this.selectQuestion(id!);
+			}
+		});
 	}
 
 	get questions() {

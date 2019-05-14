@@ -42,10 +42,7 @@ export class LoginDialogComponent {
 
 	onLogin() {
 		const { email, password } = this.formGroup.value;
-		this.authService.login(email, password).subscribe(
-			() => this.dialogRef.close(),
-			() => this.formGroup.reset()
-		);
+		this.authService.login(email, password).subscribe(() => this.dialogRef.close());
 	}
 
 }

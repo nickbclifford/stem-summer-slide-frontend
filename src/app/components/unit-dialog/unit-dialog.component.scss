@@ -8,6 +8,8 @@
 	position: static;
 }
 
+// TODO: These aren't having any effects all of a sudden? What??
+
 mat-grid-list {
 	margin: 1em 0;
 }
@@ -21,12 +23,12 @@ mat-grid-list {
 
 @each $type, $palette in $stem-palette-map {
 	.tile-#{$type} {
-		background: mat-color($palette, 200);
+		background-color: mat-color($palette, 200);
 	}
 }
 
 .tile-disabled {
-	background: mat-color($mat-gray, 200);
+	background-color: mat-color($mat-gray, 200);
 }
 
 mat-icon {

@@ -6,9 +6,10 @@
 			<button mat-raised-button (click)="newUnit()" color="primary">Add New Unit</button>
 		</div>
 		<mat-action-list>
-			<ng-container *ngFor="let unit of units; last as isLast">
+			<ng-container *ngFor="let unit of units; first as isFirst">
+				<mat-divider *ngIf="isFirst"></mat-divider>
 				<button mat-list-item (click)="selectUnit(unit)">Unit {{ unit.id }}: {{ unit.title }}</button>
-				<mat-divider *ngIf="!isLast"></mat-divider>
+				<mat-divider></mat-divider>
 			</ng-container>
 		</mat-action-list>
 	</div>

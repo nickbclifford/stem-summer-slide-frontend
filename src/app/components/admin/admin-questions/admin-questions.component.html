@@ -13,9 +13,10 @@
 		</div>
 		<ng-container *ngIf="unitId; else noUnitSelected">
 			<mat-action-list *ngIf="questions.length > 0; else unitNoQuestions">
-				<ng-container *ngFor="let question of questions; last as isLast">
+				<ng-container *ngFor="let question of questions; first as isFirst">
+					<mat-divider *ngIf="isFirst"></mat-divider>
 					<button mat-list-item (click)="selectQuestion(question.id)">{{ question.questionType | titlecase }}</button>
-					<mat-divider *ngIf="!isLast"></mat-divider>
+					<mat-divider></mat-divider>
 				</ng-container>
 			</mat-action-list>
 			<ng-template #unitNoQuestions>

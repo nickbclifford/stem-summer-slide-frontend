@@ -20,6 +20,7 @@ export class UnitDialogComponent implements OnInit {
 	) {	}
 
 	ngOnInit() {
+		console.log(this.unit);
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationStart) {
 				this.dialogRef.close(true);
