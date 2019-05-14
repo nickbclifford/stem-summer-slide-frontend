@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { ErrorResponse } from '../common/http';
 import { catchError } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class ErrorService {
 
-	readonly handleErrorOperator = catchError<any, never>(this.handleRequestError.bind(this));
+	readonly handleErrorOperator = catchError<any, Observable<never>>(this.handleRequestError.bind(this));
 
 	constructor(private snackBar: MatSnackBar) { }
 
