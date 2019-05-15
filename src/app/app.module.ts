@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {
 	MatButtonModule,
-	MatCardModule,
+	MatCardModule, MatCheckboxModule,
 	MatChipsModule,
 	MatDialogModule,
 	MatDividerModule,
@@ -28,7 +28,7 @@ import {
 	MatTooltipModule
 } from '@angular/material';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APIInterceptor } from './common/api-interceptor';
 import { UnitsComponent } from './components/units/units.component';
 import { UnitDialogComponent } from './components/unit-dialog/unit-dialog.component';
@@ -95,7 +95,9 @@ import { AdminAnswersComponent } from './components/admin/admin-answers/admin-an
 		MatDividerModule,
 		MatTabsModule,
 		MatChipsModule,
-		MatSelectModule
+		MatSelectModule,
+		MatCheckboxModule,
+		FormsModule
 	],
 	entryComponents: [
 		LoginDialogComponent,

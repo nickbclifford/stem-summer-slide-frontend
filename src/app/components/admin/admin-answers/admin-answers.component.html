@@ -1,3 +1,47 @@
-<p>
-  admin-answers works!
-</p>
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="container">
+	<div class="side">
+		<div class="header">
+			<h2>Questions</h2>
+			<mat-form-field>
+				<mat-label>Unit</mat-label>
+				<mat-select [(value)]="unitId">
+					<mat-option *ngFor="let unit of units" [value]="unit.id">Unit {{ unit.id }}: {{ unit.title }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Question</mat-label>
+				<mat-select [(value)]="questionId" [disabled]="!unitId">
+					<mat-option *ngFor="let question of questions" [value]="question.id">{{ question.questionType | titlecase }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-checkbox [(ngModel)]="onlyShowUngraded">Only show ungraded answers</mat-checkbox>
+		</div>
+		<ng-container *ngIf="unitId; else noUnitSelected">
+			<mat-action-list *ngIf="questionId; else noQuestionSelected">
+				<ng-container *ngFor="let answer of answers; first as isFirst">
+					<mat-divider *ngIf="isFirst"></mat-divider>
+					<button mat-list-item (click)="selectAnswer(answer.id)">{{ answer.submittedAt | date }}</button>
+					<mat-divider></mat-divider>
+				</ng-container>
+			</mat-action-list>
+			<ng-template #noQuestionSelected>
+				<p>Click on a question in the dropdown above to select it!</p>
+			</ng-template>
+		</ng-container>
+		<ng-template #noUnitSelected>
+			<p>Click on a unit in the dropdown above to select it!</p>
+		</ng-template>
+	</div>
+	<mat-divider vertical></mat-divider>
+	<div class="side">
+		<h2>Review Answer</h2>
+		<div *ngIf="selectedAnswer; else noAnswerSelected">
+			<p>{{ selectedAnswer.points || 'no' }} points</p>
+		</div>
+		<ng-template #noAnswerSelected>
+			<!-- TODO: Center text, maybe make gray -->
+			<p>Click on an answer in the list to select it!</p>
+		</ng-template>
+	</div>
+</div>
