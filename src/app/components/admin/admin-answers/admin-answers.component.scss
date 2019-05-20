@@ -1,0 +1,27 @@
+.answer-header {
+	width: 100%;
+}
+
+.ungraded {
+	float: right;
+	font-weight: lighter;
+	font-style: italic;
+}
+
+.answer-content {
+	display: flex;
+	flex-flow: row wrap;
+
+	img {
+		max-height: 30%;
+		max-width: 30%;
+	}
+}
+
+mat-form-field.change-grade {
+	width: min-content;
+}
+
+.change-grade-button {
+	margin-left: 2.5%;
+}

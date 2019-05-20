@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SimpleUnit, UnitService } from '../../../services/unit.service';
 import { Answer, AnswerService } from '../../../services/answer.service';
-import { QuestionService } from '../../../services/question.service';
+import { AnswerFormat, Question, QuestionService, QuestionWithCorrectAnswer } from '../../../services/question.service';
 import { Location } from '@angular/common';
+import { FormControl, Validators } from '@angular/forms';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Component({
 	selector: 'app-admin-answers',
@@ -14,14 +17,22 @@ export class AdminAnswersComponent implements OnInit {
 	@Input() id: number | null = null;
 
 	units: SimpleUnit[] = [];
-	unitId: number | null = null;
+	private _unitId: number | null = null;
 
 	private _questionId: number | null = null;
+	selectedQuestion: QuestionWithCorrectAnswer | null = null;
 
-	private _answers: Answer[] = [];
 	selectedAnswer: Answer | null = null;
 
 	onlyShowUngraded = false;
+
+	newGrade = new FormControl('', [
+		Validators.required,
+		Validators.min(0),
+		c => this.selectedQuestion ? Validators.max(this.selectedQuestion.maxPoints)(c) : null
+	]);
+
+	formats = AnswerFormat;
 
 	constructor(
 		private unitService: UnitService,
@@ -33,18 +44,17 @@ export class AdminAnswersComponent implements OnInit {
 	ngOnInit() {
 		this.unitService.units$.subscribe(u => this.units = u);
 
-		console.log(this.id);
-
 		if (this.id) {
 			this.selectAnswer(this.id);
 		}
 	}
 
 	selectAnswer(id: number) {
-		this.answerService.getAnswer(id).subscribe(a => {
+		this.answerService.getAnswer(id).pipe(
+			switchMap(a => this.updateQuestion(a.questionId).pipe(map(() => a)))
+		).subscribe(a => {
 			this.selectedAnswer = a;
 			this.location.go(`/admin/answers/${id}`);
-			this.questionId = a.questionId;
 		});
 	}
 
@@ -56,11 +66,27 @@ export class AdminAnswersComponent implements OnInit {
 	}
 
 	get answers() {
+		if (!this.selectedQuestion) { return []; }
+
 		if (this.onlyShowUngraded) {
-			return this._answers.filter(a => a.points === null);
+			return this.selectedQuestion.answers.filter(a => a.points === null);
 		}
 
-		return this._answers;
+		return this.selectedQuestion.answers;
+	}
+
+	get unitId() {
+		return this._unitId;
+	}
+
+	set unitId(id: number | null) {
+		if (id) {
+			this.location.go('/admin/answers');
+			this.selectedAnswer = null;
+		}
+
+		this._unitId = id;
+		this.selectedQuestion = null;
 	}
 
 	get questionId() {
@@ -68,16 +94,33 @@ export class AdminAnswersComponent implements OnInit {
 	}
 
 	set questionId(id: number | null) {
+		this.updateQuestion(id).subscribe(() => {
+			if (id) {
+				this.location.go('/admin/answers');
+				this.selectedAnswer = null;
+			}
+		});
+	}
+
+	updateQuestion(id: number | null): Observable<Question | null> {
+		this._questionId = id;
+
 		if (id) {
-			this.questionService.getQuestion(id).subscribe(q => {
-				this._answers = q.answers;
+			return this.questionService.getQuestion(id).pipe(tap(q => {
 				if (!this.unitId) {
 					this.unitId = q.unitId;
 				}
-			});
+				this.selectedQuestion = q as QuestionWithCorrectAnswer;
+			}));
 		}
 
-		this._questionId = id;
+		return of(null);
+	}
+
+	changeGrade() {
+		this.answerService.gradeAnswer(this.selectedAnswer!.id, this.newGrade.value).subscribe(() => {
+			this.selectAnswer(this.selectedAnswer!.id);
+		});
 	}
 
 }

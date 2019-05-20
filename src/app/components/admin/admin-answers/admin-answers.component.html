@@ -21,7 +21,12 @@
 			<mat-action-list *ngIf="questionId; else noQuestionSelected">
 				<ng-container *ngFor="let answer of answers; first as isFirst">
 					<mat-divider *ngIf="isFirst"></mat-divider>
-					<button mat-list-item (click)="selectAnswer(answer.id)">{{ answer.submittedAt | date }}</button>
+					<button mat-list-item (click)="selectAnswer(answer.id)">
+						<span class="answer-header">
+							{{ answer.submittedAt | date:'EEEE, MMMM d (h:mm a)' }}
+							<span class="ungraded" *ngIf="!answer.points">Ungraded</span>
+						</span>
+					</button>
 					<mat-divider></mat-divider>
 				</ng-container>
 			</mat-action-list>
@@ -37,10 +42,42 @@
 	<div class="side">
 		<h2>Review Answer</h2>
 		<div *ngIf="selectedAnswer; else noAnswerSelected">
-			<p>{{ selectedAnswer.points || 'no' }} points</p>
+			<mat-divider></mat-divider>
+			<h3>Question</h3>
+			<p>{{ selectedQuestion.body }}</p>
+			<ng-container *ngIf="selectedQuestion.correctAnswer">
+				<h4>Correct Answer</h4>
+				<p>{{ selectedQuestion.correctAnswer }}</p>
+			</ng-container>
+			<mat-divider></mat-divider>
+			<h3>Answer Content</h3>
+			<div class="answer-content" *ngIf="selectedQuestion.answerFormat == formats.IMAGE; else nonImageContent">
+				<img *ngFor="let url of selectedAnswer.content.split(' '), index as i" [src]="url" alt="Submitted image {{ i }}">
+			</div>
+			<ng-template #nonImageContent>
+				<p>{{ selectedAnswer.content }}</p>
+			</ng-template>
+			<mat-divider></mat-divider>
+			<h3>Grade</h3>
+			<p>
+				Current grade:
+				<span *ngIf="selectedAnswer.points; else ungraded">
+					<strong>{{ selectedAnswer.points }}</strong>/{{ selectedQuestion.maxPoints }} points
+				</span>
+				<ng-template #ungraded>
+					<strong>none</strong>
+				</ng-template>
+			</p>
+			<mat-form-field class="change-grade">
+				<input matInput placeholder="Points" type="number" [formControl]="newGrade" min="0" [max]="selectedQuestion.maxPoints">
+				<span matSuffix>/{{ selectedQuestion.maxPoints }} points</span>
+				<mat-error *ngIf="newGrade.hasError('required')">New grade is required!</mat-error>
+				<mat-error *ngIf="newGrade.hasError('min')">New grade must be greater than 0 points!</mat-error>
+				<mat-error *ngIf="newGrade.hasError('max')">New grade must be less than {{ selectedQuestion.maxPoints }} points!</mat-error>
+			</mat-form-field>
+			<button class="change-grade-button" mat-raised-button color="primary" [disabled]="newGrade.invalid" (click)="changeGrade()">Change Grade</button>
 		</div>
 		<ng-template #noAnswerSelected>
-			<!-- TODO: Center text, maybe make gray -->
 			<p>Click on an answer in the list to select it!</p>
 		</ng-template>
 	</div>

@@ -50,6 +50,14 @@ export class AnswerService {
 		);
 	}
 
+	gradeAnswer(id: number, points: number) {
+		return this.http.post(
+			environment.backendURL + '/answer/grade',
+			{ id, points },
+			options
+		);
+	}
+
 }
 
 export interface Answer {
