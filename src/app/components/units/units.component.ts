@@ -35,14 +35,17 @@ export class UnitsComponent implements OnInit {
 			})
 		).subscribe(unit => {
 			if (unit) {
-				const dialogRef = this.dialog.open(UnitDialogComponent, {
-					data: unit,
-					width: '20em'
-				});
-				dialogRef.afterClosed().subscribe((navigatedAway: boolean) => {
-					if (!navigatedAway) {
-						this.router.navigate(['/units']);
-					}
+				// https://github.com/angular/components/issues/5268
+				setTimeout(() => {
+					const dialogRef = this.dialog.open(UnitDialogComponent, {
+						data: unit,
+						width: '20em'
+					});
+					dialogRef.afterClosed().subscribe((navigatedAway: boolean) => {
+						if (!navigatedAway) {
+							this.router.navigate(['/units']);
+						}
+					});
 				});
 			}
 		});

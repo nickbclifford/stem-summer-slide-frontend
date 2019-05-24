@@ -65,7 +65,7 @@ export class AdminAnswersComponent implements OnInit {
 		return unit.questions;
 	}
 
-	get answers() {
+	get answers(): Answer[] {
 		if (!this.selectedQuestion) { return []; }
 
 		if (this.onlyShowUngraded) {
