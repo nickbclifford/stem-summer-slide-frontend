@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
@@ -26,7 +26,8 @@ export class RegisterDialogComponent {
 
 	constructor(
 		private authService: AuthService,
-		private dialogRef: MatDialogRef<RegisterDialogComponent>
+		private dialogRef: MatDialogRef<RegisterDialogComponent>,
+		private snackBar: MatSnackBar
 	) { }
 
 	get emailErrorMessage() {
@@ -45,7 +46,10 @@ export class RegisterDialogComponent {
 		console.log(this.formGroup.value);
 
 		const { name, email, password } = this.formGroup.value;
-		this.authService.register(name, email, password).subscribe(() => this.dialogRef.close());
+		this.authService.register(name, email, password).subscribe(() => {
+			this.dialogRef.close();
+			this.snackBar.open('Check your email for a confirmation message.', 'Got it!');
+		});
 	}
 
 }

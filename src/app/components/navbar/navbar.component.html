@@ -1,5 +1,5 @@
 <mat-toolbar *appLet="(userService.$ | async) as user" color="primary">
-	<a class="home" mat-button routerLink="/home">STEM Summer Slide</a>
+	<a class="home" mat-button routerLink="/home">Preventing STEM Summer Slide</a>
 	<a mat-button routerLink="/units">All Units</a>
 	<a mat-button routerLink="/about">About</a>
 	<a *ngIf="user?.admin" mat-button routerLink="/admin/units">Administration</a>

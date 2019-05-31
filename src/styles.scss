@@ -9,6 +9,6 @@ a {
 }
 
 // For question page
-.mat-progress-spinner circle, .mat-spinner circle {
+app-question > .mat-progress-spinner circle, app-question > .mat-spinner circle {
 	stroke: white !important;
 }

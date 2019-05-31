@@ -1,0 +1,11 @@
+<ng-container *ngIf="isPending; else completed">
+	<mat-spinner></mat-spinner>
+</ng-container>
+<ng-template #completed>
+	<ng-container *ngIf="success; else failure">
+		<mat-icon>check_circle_outline</mat-icon>
+	</ng-container>
+	<ng-template #failure>
+		<mat-icon>error_outline</mat-icon>
+	</ng-template>
+</ng-template>

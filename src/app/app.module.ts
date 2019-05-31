@@ -10,7 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {
 	MatButtonModule,
-	MatCardModule, MatCheckboxModule,
+	MatCardModule,
+	MatCheckboxModule,
 	MatChipsModule,
 	MatDialogModule,
 	MatDividerModule,
@@ -21,7 +22,8 @@ import {
 	MatInputModule,
 	MatListModule,
 	MatProgressSpinnerModule,
-	MatRippleModule, MatSelectModule,
+	MatRippleModule,
+	MatSelectModule,
 	MatSnackBarModule,
 	MatTabsModule,
 	MatToolbarModule,
@@ -42,6 +44,7 @@ import { AdminMainComponent } from './components/admin/admin-main/admin-main.com
 import { AdminUnitsComponent } from './components/admin/admin-units/admin-units.component';
 import { AdminQuestionsComponent } from './components/admin/admin-questions/admin-questions.component';
 import { AdminAnswersComponent } from './components/admin/admin-answers/admin-answers.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
 	declarations: [
@@ -58,7 +61,8 @@ import { AdminAnswersComponent } from './components/admin/admin-answers/admin-an
 		AdminMainComponent,
 		AdminUnitsComponent,
 		AdminQuestionsComponent,
-		AdminAnswersComponent
+		AdminAnswersComponent,
+		ConfirmComponent
 	],
 	imports: [
 		BrowserModule,

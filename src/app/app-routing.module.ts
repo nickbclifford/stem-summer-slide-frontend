@@ -5,6 +5,8 @@ import { QuestionComponent } from './components/question/question.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
+import { AdminGuard } from './common/admin.guard';
 
 const routes: Routes = [
 	{
@@ -39,6 +41,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'admin/:stage',
+		canActivate: [AdminGuard],
 		children: [
 			{
 				path: '',
@@ -49,6 +52,10 @@ const routes: Routes = [
 				component: AdminMainComponent
 			}
 		]
+	},
+	{
+		path: 'confirm/:userId/:hash',
+		component: ConfirmComponent
 	}
 ];
 
