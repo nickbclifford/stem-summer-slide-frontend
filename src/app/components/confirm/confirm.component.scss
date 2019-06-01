@@ -1,0 +1,21 @@
+@import "~src/variables";
+
+mat-icon {
+	font-size: 10em;
+	display: block;
+	height: initial;
+	width: initial;
+}
+
+.flex-content {
+	// It's not 100% cause I want it to be centered(ish) with the whole screen, not just the router-outlet space
+	height: 90%;
+}
+
+h1 {
+	font-weight: normal;
+}
+
+a {
+	color: mat-color($mat-pink, A200);
+}

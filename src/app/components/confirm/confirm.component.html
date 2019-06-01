@@ -1,11 +1,18 @@
-<ng-container *ngIf="isPending; else completed">
-	<mat-spinner></mat-spinner>
-</ng-container>
-<ng-template #completed>
-	<ng-container *ngIf="success; else failure">
-		<mat-icon>check_circle_outline</mat-icon>
+<div class="flex-content">
+	<ng-container *ngIf="isPending; else completed">
+		<mat-spinner [diameter]="150"></mat-spinner>
+		<h1>Confirming...</h1>
 	</ng-container>
-	<ng-template #failure>
-		<mat-icon>error_outline</mat-icon>
+	<ng-template #completed>
+		<ng-container *ngIf="success; else failure">
+			<mat-icon>check_circle_outline</mat-icon>
+			<h1>Confirmed!</h1>
+			<p><a routerLink="/home">Head to the home page</a> to start!</p>
+		</ng-container>
+		<ng-template #failure>
+			<mat-icon>error_outline</mat-icon>
+			<h1>Confirmation failed!</h1>
+			<p>Try checking your email again.</p>
+		</ng-template>
 	</ng-template>
-</ng-template>
+</div>

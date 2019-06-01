@@ -31,6 +31,7 @@ export class AdminMainComponent implements OnInit {
 	}
 
 	onTabChange(tabIndex: number) {
+		this.id = null;
 		// Keeps the URL in sync with the current tab state without actually re-rendering any routes
 		this.location.go(`/admin/${stageNames[tabIndex]}`);
 	}
